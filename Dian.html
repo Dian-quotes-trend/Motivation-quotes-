@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dian AI - Intelligent Assistant</title>
+    <title>Dian AI - Telegram-Style Chat</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <style>
@@ -15,25 +15,27 @@
         }
 
         :root {
-            --primary-blue: #128C7E;
-            --dark-blue: #075E54;
-            --light-blue: #25D366;
-            --chat-bg: #e6f4f2;
-            --user-bubble: #DCF8C6;
-            --bot-bubble: #FFFFFF;
-            --input-bg: #f0f2f5;
-            --text-dark: #3b4a54;
-            --text-light: #667781;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --telegram-bg: #0e1621;
+            --telegram-header: #17212b;
+            --telegram-input: #17212b;
+            --telegram-bubble-user: #2b5278;
+            --telegram-bubble-bot: #182533;
+            --telegram-text: #e1e1e1;
+            --telegram-text-muted: #6b7b8d;
+            --telegram-accent: #3e8ed0;
+            --telegram-green: #3e8ed0;
+            --telegram-hover: #1f2a32;
+            --telegram-border: #1d2c3a;
+            --telegram-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
         }
 
         body {
-            background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
+            background: linear-gradient(135deg, #0a0a0a, #0e1621, #17212b);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--text-dark);
+            color: var(--telegram-text);
             padding: 20px;
             overflow: hidden;
         }
@@ -43,14 +45,15 @@
             max-width: 420px;
             height: 90vh;
             max-height: 800px;
-            background: var(--chat-bg);
-            border-radius: 20px;
+            background: var(--telegram-bg);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: var(--shadow);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
             position: relative;
             z-index: 10;
+            border: 1px solid var(--telegram-border);
         }
 
         /* Social Media Modal */
@@ -60,7 +63,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.85);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -76,14 +79,15 @@
         }
 
         .social-content {
-            background: white;
+            background: var(--telegram-header);
             width: 90%;
             max-width: 350px;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             transform: translateY(20px);
             transition: transform 0.4s ease;
+            border: 1px solid var(--telegram-border);
         }
 
         .social-modal.active .social-content {
@@ -94,18 +98,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--telegram-border);
         }
 
         .social-header h2 {
-            color: var(--dark-blue);
-            font-size: 24px;
+            color: var(--telegram-green);
+            font-size: 20px;
+            font-weight: 500;
         }
 
         .close-modal {
-            background: #f0f0f0;
+            background: transparent;
             border: none;
             width: 36px;
             height: 36px;
@@ -115,65 +120,66 @@
             align-items: center;
             cursor: pointer;
             transition: all 0.2s;
+            color: var(--telegram-text-muted);
         }
 
         .close-modal:hover {
-            background: #e0e0e0;
-            transform: rotate(90deg);
+            background: var(--telegram-hover);
+            color: var(--telegram-text);
         }
 
         .social-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
         }
 
         .social-card {
-            background: #f9f9f9;
-            border-radius: 15px;
-            padding: 20px;
+            background: var(--telegram-bubble-bot);
+            border-radius: 12px;
+            padding: 18px;
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--telegram-border);
         }
 
         .social-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+            background: var(--telegram-hover);
+            box-shadow: var(--telegram-shadow);
         }
 
-        .social-card.whatsapp { background: rgba(37, 211, 102, 0.1); }
-        .social-card.tiktok { background: rgba(0, 0, 0, 0.05); }
-        .social-card.instagram { background: rgba(225, 48, 108, 0.1); }
-        .social-card.twitter { background: rgba(29, 161, 242, 0.1); }
+        .social-card.whatsapp { border-top: 3px solid #25D366; }
+        .social-card.tiktok { border-top: 3px solid #000000; }
+        .social-card.website { border-top: 3px solid var(--telegram-green); }
 
         .social-icon {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 28px;
+            font-size: 24px;
             color: white;
-            margin: 0 auto 15px;
+            margin: 0 auto 12px;
         }
 
         .social-icon.whatsapp { background: #25D366; }
         .social-icon.tiktok { background: #000; }
-        .social-icon.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-        .social-icon.twitter { background: #1DA1F2; }
+        .social-icon.website { background: var(--telegram-green); }
 
         .social-card h3 {
-            font-size: 16px;
-            margin-bottom: 5px;
-            color: var(--text-dark);
+            font-size: 15px;
+            margin-bottom: 4px;
+            color: var(--telegram-text);
+            font-weight: 500;
         }
 
         .social-card p {
-            font-size: 13px;
-            color: var(--text-light);
+            font-size: 12px;
+            color: var(--telegram-text-muted);
         }
 
         /* Command shortcuts menu */
@@ -182,16 +188,17 @@
             bottom: 75px;
             left: 20px;
             width: 280px;
-            background: white;
-            border-radius: 18px;
+            background: var(--telegram-header);
+            border-radius: 12px;
             padding: 15px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
             z-index: 20;
             display: none;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             transform-origin: bottom left;
             animation: scaleIn 0.2s ease forwards;
+            border: 1px solid var(--telegram-border);
         }
 
         @keyframes scaleIn {
@@ -204,56 +211,53 @@
         }
 
         .command-btn {
-            background: #f0f4f8;
+            background: var(--telegram-bubble-bot);
             border: none;
             padding: 10px 15px;
-            border-radius: 50px;
+            border-radius: 8px;
             font-size: 14px;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
             transition: all 0.2s;
+            color: var(--telegram-text);
+            border: 1px solid var(--telegram-border);
         }
 
         .command-btn:hover {
-            background: #e1e8f0;
+            background: var(--telegram-hover);
             transform: translateY(-2px);
         }
 
         .command-btn i {
             font-size: 16px;
+            color: var(--telegram-green);
         }
 
-        <audio autoplay loop class="audio-control">
-    <source src="https://files.catbox.moe/l72n98.m4a" type="audio/mp3">
-    Your browser does not support the audio element.
-  </audio>
-        
         /* Header styling */
         .chat-header {
-            background: linear-gradient(to right, var(--dark-blue), var(--primary-blue));
-            color: white;
-            padding: 18px 20px;
+            background: var(--telegram-header);
+            color: var(--telegram-text);
+            padding: 15px 18px;
             display: flex;
             align-items: center;
             gap: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
             z-index: 10;
+            border-bottom: 1px solid var(--telegram-border);
         }
 
         .avatar {
-            width: 48px;
-            height: 48px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            background: linear-gradient(45deg, var(--light-blue), var(--primary-blue));
+            background: linear-gradient(45deg, var(--telegram-green), #2b5278);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 24px;
+            font-size: 20px;
             color: white;
             font-weight: bold;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
 
         .header-info {
@@ -261,64 +265,66 @@
         }
 
         .header-info h1 {
-            font-size: 20px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 0.2px;
         }
 
         .header-info p {
             font-size: 13px;
-            opacity: 0.9;
-            margin-top: 4px;
+            margin-top: 3px;
             display: flex;
             align-items: center;
             gap: 5px;
+            color: var(--telegram-text-muted);
         }
 
         .online-dot {
             width: 8px;
             height: 8px;
-            background: #4ade80;
+            background: var(--telegram-green);
             border-radius: 50%;
             display: inline-block;
         }
 
         .header-icons {
             display: flex;
-            gap: 22px;
-            font-size: 20px;
+            gap: 18px;
+            font-size: 18px;
+            color: var(--telegram-text-muted);
         }
 
         .header-icons i {
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s;
         }
 
         .header-icons i:hover {
+            color: var(--telegram-text);
             transform: scale(1.1);
         }
 
         /* Messages area */
         .messages {
             flex: 1;
-            padding: 20px 16px;
+            padding: 15px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23e5e5e5" opacity="0.05"/></svg>');
-            background-size: 150px;
+            gap: 12px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%2317212b" opacity="0.03"/></svg>');
+            background-size: 180px;
         }
 
         .message {
             max-width: 85%;
-            padding: 14px 18px;
-            border-radius: 18px;
+            padding: 12px 16px;
+            border-radius: 8px;
             position: relative;
             animation: fadeIn 0.3s ease;
             line-height: 1.5;
-            font-size: 15.5px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            font-size: 15px;
+            box-shadow: var(--telegram-shadow);
         }
 
         @keyframes fadeIn {
@@ -327,36 +333,34 @@
         }
 
         .bot-message {
-            background: var(--bot-bubble);
+            background: var(--telegram-bubble-bot);
             align-self: flex-start;
-            border-bottom-left-radius: 4px;
-            color: var(--text-dark);
-            border: 1px solid rgba(0, 0, 0, 0.03);
+            border-radius: 0 8px 8px 8px;
+            color: var(--telegram-text);
         }
 
         .user-message {
-            background: var(--user-bubble);
+            background: var(--telegram-bubble-user);
             align-self: flex-end;
-            border-bottom-right-radius: 4px;
-            color: var(--text-dark);
+            border-radius: 8px 0 8px 8px;
+            color: var(--telegram-text);
         }
 
         .typing-indicator {
-            background: var(--bot-bubble);
-            padding: 14px 18px;
-            border-radius: 18px;
+            background: var(--telegram-bubble-bot);
+            padding: 12px 16px;
+            border-radius: 8px;
             align-self: flex-start;
-            border-bottom-left-radius: 4px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--telegram-shadow);
         }
 
         .typing-dot {
-            width: 9px;
-            height: 9px;
-            background: var(--text-light);
+            width: 8px;
+            height: 8px;
+            background: var(--telegram-text-muted);
             border-radius: 50%;
             animation: typing 1.4s infinite ease-in-out;
         }
@@ -372,77 +376,83 @@
 
         /* Input area */
         .input-area {
-            background: var(--input-bg);
-            padding: 12px 18px;
+            background: var(--telegram-input);
+            padding: 12px 15px;
             display: flex;
             align-items: center;
-            gap: 14px;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            gap: 12px;
+            border-top: 1px solid var(--telegram-border);
             position: relative;
         }
 
         .input-area i {
-            color: var(--primary-blue);
-            font-size: 24px;
+            color: var(--telegram-text-muted);
+            font-size: 22px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .input-area i:hover {
             transform: scale(1.05);
-            color: var(--dark-blue);
+            color: var(--telegram-text);
         }
 
         .input-area input {
             flex: 1;
-            padding: 14px 20px;
+            padding: 12px 18px;
             border: none;
-            border-radius: 24px;
-            font-size: 15.5px;
-            background: white;
+            border-radius: 20px;
+            font-size: 15px;
+            background: var(--telegram-bubble-bot);
             outline: none;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+            color: var(--telegram-text);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
         }
 
+        .input-area input::placeholder {
+            color: var(--telegram-text-muted);
+        }
+
         .input-area input:focus {
-            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(18, 140, 126, 0.2);
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1), 0 0 0 2px rgba(62, 142, 208, 0.3);
+            background: var(--telegram-hover);
         }
 
         .send-btn {
-            background: var(--primary-blue);
+            background: var(--telegram-green);
             color: white;
             border: none;
-            width: 46px;
-            height: 46px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 20px;
+            font-size: 18px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
 
         .send-btn:hover {
-            background: var(--dark-blue);
+            background: #2b7fc1;
             transform: scale(1.05);
         }
 
         /* Footer styling */
         .chat-footer {
-            background: var(--input-bg);
-            padding: 14px 0;
+            background: var(--telegram-input);
+            padding: 12px 0;
             text-align: center;
-            font-size: 12.5px;
-            color: var(--text-light);
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 12px;
+            color: var(--telegram-text-muted);
+            border-top: 1px solid var(--telegram-border);
             font-weight: 500;
         }
 
         .chat-footer a {
-            color: var(--primary-blue);
+            color: var(--telegram-green);
             text-decoration: none;
             font-weight: 600;
             transition: all 0.2s;
@@ -450,26 +460,60 @@
 
         .chat-footer a:hover {
             text-decoration: underline;
-            color: var(--dark-blue);
         }
 
         /* Scrollbar styling */
         .messages::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         .messages::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 4px;
         }
 
         .messages::-webkit-scrollbar-thumb {
-            background: rgba(18, 140, 126, 0.3);
+            background: var(--telegram-green);
             border-radius: 4px;
         }
 
         .messages::-webkit-scrollbar-thumb:hover {
-            background: rgba(18, 140, 126, 0.5);
+            background: #2b7fc1;
+        }
+
+        /* Message timestamp */
+        .message-time {
+            display: block;
+            text-align: right;
+            font-size: 11px;
+            color: var(--telegram-text-muted);
+            margin-top: 5px;
+            margin-left: 30px;
+        }
+
+        /* Status indicators */
+        .status-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            transition: all 0.3s;
+        }
+        
+        .status-connected {
+            color: #4caf50;
+        }
+        
+        .status-error {
+            color: #f44336;
+        }
+        
+        .status-loading {
+            color: #ffc107;
         }
 
         /* Responsive design */
@@ -485,12 +529,12 @@
             }
             
             .input-area {
-                padding: 10px 15px;
+                padding: 10px 12px;
             }
             
             .input-area input {
-                padding: 12px 16px;
-                font-size: 15px;
+                padding: 10px 15px;
+                font-size: 14px;
             }
             
             .social-grid {
@@ -504,6 +548,9 @@
     </style>
 </head>
 <body>
+    <!-- Status Indicator -->
+    <div class="status-indicator" id="status-indicator">Status: Ready</div>
+
     <!-- Social Media Modal -->
     <div class="social-modal" id="social-modal">
         <div class="social-content">
@@ -531,20 +578,12 @@
                     <p>Watch my latest videos</p>
                 </div>
                 
-                <div class="social-card instagram" id="instagram-btn">
-                    <div class="social-icon instagram">
-                        <i class="fab fa-instagram"></i>
+                <div class="social-card website" id="website-btn">
+                    <div class="social-icon website">
+                        <i class="fas fa-globe"></i>
                     </div>
-                    <h3>Instagram</h3>
-                    <p>Follow for updates</p>
-                </div>
-                
-                <div class="social-card twitter" id="twitter-btn">
-                    <div class="social-icon twitter">
-                        <i class="fab fa-x-twitter"></i>
-                    </div>
-                    <h3>Twitter/X</h3>
-                    <p>Join the conversation</p>
+                    <h3>Website</h3>
+                    <p>Visit my quotes website</p>
                 </div>
             </div>
         </div>
@@ -553,13 +592,12 @@
     <!-- Chat Container -->
     <div class="chat-container">
         <div class="chat-header">
-            <div class="avatar">Dian</div>
+            <div class="avatar">D</div>
             <div class="header-info">
                 <h1>Dian AI</h1>
                 <p><span class="online-dot"></span> Online • Responds instantly</p>
             </div>
             <div class="header-icons">
-                <i class="fas fa-search"></i>
                 <i class="fas fa-ellipsis-v" id="menu-icon"></i>
             </div>
         </div>
@@ -567,9 +605,11 @@
         <div class="messages" id="chat-messages">
             <div class="message bot-message">
                 Hello there! 👋 I'm Dian AI, your intelligent assistant. You can ask me anything naturally or use commands like /help to get started. 😊
+                <span class="message-time">12:45</span>
             </div>
             <div class="message bot-message">
                 <strong>Tip:</strong> Tap the <i class="fas fa-ellipsis-v"></i> icon to connect with me on social media!
+                <span class="message-time">12:45</span>
             </div>
         </div>
         
@@ -577,9 +617,6 @@
         <div class="command-menu" id="command-menu">
             <button class="command-btn" data-command="/joke">
                 <i class="fas fa-laugh"></i> Joke
-            </button>
-            <button class="command-btn" data-command="/quote">
-                <i class="fas fa-quote-right"></i> Quote
             </button>
             <button class="command-btn" data-command="/calculate 2+2">
                 <i class="fas fa-calculator"></i> Calculate
@@ -603,321 +640,22 @@
         
         <div class="input-area">
             <i class="fas fa-plus-circle" id="plus-btn"></i>
-            <input type="text" id="user-input" placeholder="Ask me anything...">
-            <i class="fas fa-microphone"></i>
+            <input type="text" id="user-input" placeholder="Type a message...">
             <button class="send-btn" id="send-btn">
                 <i class="fas fa-paper-plane"></i>
             </button>
         </div>
         
         <div class="chat-footer">
-            Crafted with ❤️ by Dian
+            Crafted with ❤️ by Dian • AI Assistant v1.3
         </div>
     </div>
 
     <script>
-        const chatMessages = document.getElementById('chat-messages');
-        const userInput = document.getElementById('user-input');
-        const sendBtn = document.getElementById('send-btn');
-        const plusBtn = document.getElementById('plus-btn');
-        const commandMenu = document.getElementById('command-menu');
-        const menuIcon = document.getElementById('menu-icon');
-        const socialModal = document.getElementById('social-modal');
-        const closeModal = document.getElementById('close-modal');
-        const socialButtons = document.querySelectorAll('.social-card');
-
-        // API configuration
-        const PRIVATE_API_ENDPOINT = "https://api.giftedtech.my.id/api/ai/openai"; 
-        const JOKE_API_ENDPOINT = "https://api.giftedtech.my.id/api/fun/jokes";
-        const YOUR_API_KEY = "gifted";
-
-        // Toggle command menu
-        plusBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            commandMenu.classList.toggle('active');
-        });
-
-        // Close command menu when clicking elsewhere
-        document.addEventListener('click', (e) => {
-            if (!commandMenu.contains(e.target) && e.target !== plusBtn) {
-                commandMenu.classList.remove('active');
-            }
-        });
-
-        // Toggle social modal
-        menuIcon.addEventListener('click', () => {
-            socialModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-
-        closeModal.addEventListener('click', () => {
-            socialModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-
-        // Close modal when clicking outside the content
-        socialModal.addEventListener('click', (e) => {
-            if (e.target === socialModal) {
-                socialModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-
-        // Handle social button clicks
-        socialButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const platform = button.id.replace('-btn', '');
-                displayBotMessage(`Taking you to my ${platform} profile...`);
-                socialModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-                
-                // Simulate opening the platform (replace with actual links)
-                setTimeout(() => {
-                    displayBotMessage(`Here's the link to my ${platform}: https://${platform}.com/dian-ai`);
-                }, 1500);
-            });
-        });
-
-        // Handle command button clicks
-        document.querySelectorAll('.command-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const command = button.getAttribute('data-command');
-                userInput.value = command;
-                handleSendMessage();
-                commandMenu.classList.remove('active');
-            });
-        });
-
-        // Display bot messages with proper styling
-        function displayBotMessage(message, isHTML = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', 'bot-message');
-            
-            if (isHTML) {
-                messageDiv.innerHTML = message;
-            } else {
-                messageDiv.textContent = message;
-            }
-            
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // Display user messages
-        function displayUserMessage(message) {
-            const messageDiv = document.createElement('div');
-            messageDiv.classList.add('message', 'user-message');
-            messageDiv.textContent = message;
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // Show typing indicator
-        function showTypingIndicator() {
-            const typingDiv = document.createElement('div');
-            typingDiv.classList.add('typing-indicator');
-            typingDiv.id = 'typing-indicator';
-            typingDiv.innerHTML = `
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-            `;
-            chatMessages.appendChild(typingDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        // Hide typing indicator
-        function hideTypingIndicator() {
-            const typingIndicator = document.getElementById('typing-indicator');
-            if (typingIndicator) {
-                typingIndicator.remove();
-            }
-        }
-
-        // Safe calculation function
-        function safeCalculate(expression) {
-            if (!/^[0-9+\-*/.\s()]+$/.test(expression)) {
-                throw new Error('Invalid characters. Only numbers and basic operators allowed.');
-            }
-
-            try {
-                return new Function('return ' + expression)();
-            } catch (e) {
-                throw new Error('Could not evaluate expression. Please check syntax.');
-            }
-        }
-
-        // Fetch joke from API
-        async function fetchJoke() {
-            showTypingIndicator();
-            
-            try {
-                const url = `${JOKE_API_ENDPOINT}?apikey=${YOUR_API_KEY}`;
-                const response = await fetch(url);
-
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                hideTypingIndicator();
-
-                let jokeText;
-                if (typeof data.result === 'string') {
-                    jokeText = data.result;
-                } else if (typeof data.result === 'object' && data.result !== null) {
-                    if (data.result.joke) {
-                        jokeText = data.result.joke;
-                    } else if (data.result.setup && data.result.punchline) {
-                        jokeText = `${data.result.setup} — ${data.result.punchline}`;
-                    } else {
-                        jokeText = "Why don't scientists trust atoms? Because they make up everything! 😄";
-                    }
-                } else {
-                    jokeText = "Why did the scarecrow win an award? Because he was outstanding in his field! 🌾";
-                }
-
-                displayBotMessage(jokeText + " 😂");
-            } catch (error) {
-                hideTypingIndicator();
-                displayBotMessage("Why don't skeletons fight each other? They don't have the guts! 😅 (I couldn't fetch a joke right now)");
-                console.error("Error fetching joke:", error);
-            }
-        }
-
-        // Commands with improved English and emojis
-        const commands = [
-            { command: "help", response: "Available commands: /about, /dev, /joke, /quote, /calculate, /clear, /socials, /info, /update, /ping, /uptime, /evaluate 📚" },
-            { command: "about", response: "Dian AI 1.0 is a versatile chatbot with built-in commands and integrated APIs, designed to assist you efficiently. 🤖✨" },
-            { command: "hi", response: "Hello there! 😊 How are you doing today?" },
-            { command: "what's up", response: "Just here, ready to assist you! 👌 What can I do for you?" },
-            { command: "dev", response: "Created by Dian 🤝 and the talented H.A.P.E class team 🎓💻. We're passionate about building innovative solutions! 🚀" },
-            { command: "info", response: "I provide information and entertainment through various commands. Feel free to explore! 📺" },
-            { command: "socials", response: "Connect with me on WhatsApp, TikTok, Instagram, and Twitter/X! 📱" },
-            { command: "quote", response: "\"The only way to do great work is to love what you do.\" — Steve Jobs 💡" },
-            { command: "update", response: "We're constantly improving Dian AI with new features and enhancements! 🚀" },
-            { command: "theme", response: "Our focus is delivering a seamless, user-friendly experience. 🌈" },
-            { command: "reset", response: "Chat reset complete! 🔄 How can I assist you now?" },
-            { command: "ping", response: "Pong! 🏓" },
-            { command: "uptime", response: "I'm available 24/7 to help you! ⏰" },
-            { command: "api", response: "Our API powers various services and functionalities. 📈" },
-            {
-                command: "evaluate",
-                response: () => {
-                    const score = Math.floor(Math.random() * 100) + 1;
-                    const encouragingWords = [
-                        "Keep pushing forward!",
-                        "You're making great progress!",
-                        "Excellent effort!",
-                        "Stay focused and keep going!",
-                        "You're on the right track!",
-                    ];
-                    const word = encouragingWords[Math.floor(Math.random() * encouragingWords.length)];
-                    return `Evaluation Score: ${score}/100\n${word} 💪`;
-                },
-            },
-        ];
-
-        // Send message handler
-        sendBtn.addEventListener('click', handleSendMessage);
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleSendMessage();
-        });
-
-        async function handleSendMessage() {
-            const userInputValue = userInput.value.trim();
-            if (!userInputValue) return;
-
-            // Display user message
-            displayUserMessage(userInputValue);
-
-            // Clear input
-            userInput.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            const lowerCaseInput = userInputValue.toLowerCase();
-
-            // Handle commands
-            if (lowerCaseInput === '/joke') {
-                await fetchJoke();
-                return;
-            } else if (lowerCaseInput.startsWith('/calculate')) {
-                try {
-                    const calculation = userInputValue.replace('/calculate', '').trim();
-                    const result = safeCalculate(calculation);
-                    displayBotMessage(`Result: ${result} 📊`);
-                } catch (error) {
-                    displayBotMessage(`Error: ${error.message} 🤔`);
-                }
-            } else if (lowerCaseInput === '/clear') {
-                chatMessages.innerHTML = '';
-                displayBotMessage('Chat history cleared! 🗑️ How can I assist you now?');
-            } else if (lowerCaseInput.startsWith('/ai')) {
-                const aiQuery = userInputValue.substring(3).trim();
-                if (!aiQuery) {
-                    displayBotMessage('Please ask a question after /ai. For example: /ai What is artificial intelligence?');
-                    return;
-                }
-                
-                await queryAI(aiQuery);
-            } else {
-                // Check for matching commands
-                let commandFound = false;
-                for (const cmd of commands) {
-                    if (lowerCaseInput === `/${cmd.command}` || lowerCaseInput === cmd.command) {
-                        commandFound = true;
-                        if (typeof cmd.response === 'function') {
-                            displayBotMessage(cmd.response());
-                        } else {
-                            displayBotMessage(cmd.response);
-                        }
-                        break;
-                    }
-                }
-                
-                if (!commandFound) {
-                    // If not a command, treat as AI question
-                    await queryAI(userInputValue);
-                }
-            }
-        }
-
-        // Query AI function
-        async function queryAI(question) {
-            showTypingIndicator();
-            
-            try {
-                const encodedQuery = encodeURIComponent(question);
-                const url = `${PRIVATE_API_ENDPOINT}?apikey=${YOUR_API_KEY}&q=${encodedQuery}`;
-                const response = await fetch(url);
-
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                hideTypingIndicator();
-
-                let botAnswer;
-                if (data.result !== undefined && data.result !== null) {
-                    botAnswer = typeof data.result === 'object' ? 
-                        JSON.stringify(data.result) : data.result;
-                } else {
-                    botAnswer = "I couldn't process your request. Please try a different question.";
-                }
-
-                displayBotMessage(botAnswer);
-            } catch (error) {
-                hideTypingIndicator();
-                console.error("AI query error:", error);
-                displayBotMessage("I'm having trouble connecting right now. Please try again later. 😔");
-            }
-        }
-
-        // Initial welcome message after a short delay
-        setTimeout(() => {
-            displayBotMessage("Tap the + button for quick access to commands like /joke and /quote! 🚀");
-        }, 4000);
-    </script>
-</body>
-</html
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+            const sendBtn = document.getElementById('send-btn');
+            const plusBtn = document.getElementById('plus-btn');
+            const commandMenu = document.getElementById('command-menu');
+            const menuIcon = document.getE
